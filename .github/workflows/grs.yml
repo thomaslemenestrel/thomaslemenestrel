@@ -11,14 +11,22 @@ jobs:
     permissions:
       contents: write
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
 
       - name: Generate top languages card
-        uses: <action-repo>/github-readme-stats-action@v1
+        uses: stats-organization/github-readme-stats-action@v2
         with:
           card: top-langs
-          options: username=thomaslemenestrel&layout=compact&langs_count=5&hide=jupyter%20notebook
+          options: username=${{ github.repository_owner }}&layout=compact&langs_count=5&hide=jupyter%20notebook&theme=transparent&hide_border=true
           path: profile/top-langs.svg
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Generate stats card
+        uses: stats-organization/github-readme-stats-action@v2
+        with:
+          card: stats
+          options: username=${{ github.repository_owner }}&show_icons=true&hide=issues&theme=transparent&hide_border=true
+          path: profile/stats.svg
           token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Commit cards
